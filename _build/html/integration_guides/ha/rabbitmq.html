@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RabbitMQ Cluster &mdash; morpheus-docs 2.12.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/my_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="morpheus-docs 2.12.2 documentation" href="../../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../provisioning/provisioning.html">Provisioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/infrastructure.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../administration/administration.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../monitoring/monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logs/logging.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backups/backups.html">Backups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../services/services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integration_guides.html">Integration Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/faqs.html">FAQ’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ha/ha_setup.html">Morpheus High Availability Configuration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">morpheus-docs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>RabbitMQ Cluster</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/integration_guides/ha/rabbitmq.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rabbitmq-cluster">
+<h1>RabbitMQ Cluster<a class="headerlink" href="#rabbitmq-cluster" title="Permalink to this headline">¶</a></h1>
+<p>Prerequisites</p>
+<p>The basic requirement for RabbitMQ Cluster setup is to have minimum 2 nodes with CentOS 7 that we will using in this articles. Setup their FQDN and basic network settings and make sure that you are connected to the Internet.</p>
+<p>In this article we will be using two Linux CentOS 7 servers with following host names.</p>
+<p>RabbitMQ Master Server:</p>
+<p>[<a class="reference external" href="mailto:root&#37;&#52;&#48;linux">root<span>&#64;</span>linux</a> ~]# hostname
+linux
+RabbitMQ Slave Server:</p>
+<p>[<a class="reference external" href="mailto:root&#37;&#52;&#48;node2">root<span>&#64;</span>node2</a> ~]# hostname
+node2
+Make sure that your both servers are date with latest updates and patches by running the following command with root or sudo user privileges.</p>
+<p><code class="docutils literal"><span class="pre">yum</span> <span class="pre">-y</span> <span class="pre">update</span></code></p>
+<p>Installing ERLANG</p>
+<p>After basic system setup, we are going to start installation of RabbitMQ’s main dependencies such Erlang. To install Erlang on our system, we will be using the latest EPEL repository. Let’s run the following command to install the latest EPEl release.</p>
+<p><code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">epel-release</span></code></p>
+<p>epeal release</p>
+<p>Once the EPEL release has been installed on your system, then you can install Erlang on CentOS 7 by issuing the following command.</p>
+<p><code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">erlang</span></code></p>
+<p>Erlang Installation</p>
+<p>after resolving the dependencies, you will be asked to proceed or not. Press ‘y’ key and hit enter to continue. This will install Erlang and its all required dependencies on your system as shown.</p>
+<p>erlang and dependencies</p>
+<p>Installing RabbitMQ</p>
+<p>After completing the installation of Erlang, now we are going to install RabbitMQ using its latest RPM package available on RabbitMQ Resource Page.</p>
+<p>RabbitMQ RPM</p>
+<p>Let’s copy the download source address and run the following ‘wget’ command to download the RPM package on your system.</p>
+<p><code class="docutils literal"><span class="pre">wget</span> <span class="pre">https://www.rabbitmq.com/releases/rabbitmq-server/v3.6.1/rabbitmq-server-3.6.1-1.noarch.rpm</span></code></p>
+<p>Then run the command below to install the RabbitMQ RPM package on your system.</p>
+<blockquote>
+<div>rpm -i rabbitmq-server-3.6.1-1.noarch.rpm</div></blockquote>
+<p>Installing rabbitmq</p>
+<p>Now we have installed RabbitMQ server on both of our nodes. start is service and check the status using below commands.</p>
+<blockquote>
+<div>rabbitmqctl status</div></blockquote>
+<p>You might the below error , run the below command and check the status again.</p>
+<blockquote>
+<div>/etc/init.d/rabbitmq-server restart</div></blockquote>
+<p>rabbitmq status</p>
+<blockquote>
+<div>rabbitmqctl status</div></blockquote>
+<p>Once you have restarted RabbitMQ services you should see the following output on both nodes.</p>
+<p>rq_status</p>
+<p>RabbitMQ Cluster Setup:</p>
+<p>In order to create a RabbitMQ cluster, first choose your fisrt node which is going to be the Master.
+In our case we will using our ‘linux’ node. There’s a cookie file which resides on each one of the nodes, but in order to join all nodes into a cluster, this cookie file needs to be identical on all machines in the cluster, use the cookie file from the Master node and copy it to the rest of the nodes.</p>
+<p>You can find this under below path.</p>
+<blockquote>
+<div>[<a class="reference external" href="mailto:root&#37;&#52;&#48;linux">root<span>&#64;</span>linux</a> ~]# cat /var/lib/rabbitmq/.erlang.cookie</div></blockquote>
+<p>Sample output:</p>
+<blockquote>
+<div>SVTRZKAOOADLOJQAOBJQ</div></blockquote>
+<p>Now copy this key o all of your current node that you want to join with the cluster and change its permissions using the follow commands.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>chown rabbitmq:rabbitmq /var/lib/rabbitmq/*</dt>
+<dd>chmod 400 /var/lib/rabbitmq/.erlang.cookie</dd>
+</dl>
+</div></blockquote>
+<p>Now we will run the commands to join each node to the cluster using below command</p>
+<blockquote>
+<div>rabbitmqctl stop_app
+rabbitmqctl join_cluster –ram <a class="reference external" href="mailto:rabbit&#37;&#52;&#48;node_name">rabbit<span>&#64;</span>node_name</a>
+rabbitmqctl start_app</div></blockquote>
+<p>In order to check the status of your cluster run the below command.</p>
+<blockquote>
+<div>rabbitmqctl cluster_status</div></blockquote>
+<p>OR</p>
+<blockquote>
+<div>/usr/sbin/rabbitmqctl cluster_status</div></blockquote>
+<p>Here is the sample output:</p>
+<blockquote>
+<div>Cluster status of node <a class="reference external" href="mailto:rabbit&#37;&#52;&#48;node2">rabbit<span>&#64;</span>node2</a> …</div></blockquote>
+<p>[{nodes,[{disc,[<a class="reference external" href="mailto:rabbit&#37;&#52;&#48;node2">rabbit<span>&#64;</span>node2</a>]}]},
+{running_nodes,[<a class="reference external" href="mailto:rabbit&#37;&#52;&#48;node2">rabbit<span>&#64;</span>node2</a>]},
+{cluster_name,&amp;lt;&amp;gt;},
+{partitions,[]},
+{alarms,[<a class="reference external" href="mailto:{rabbit&#37;&#52;&#48;linux">{rabbit<span>&#64;</span>linux</a>,[]}]}]
+Enable RabbitMQ Management Plugin</p>
+<p>Our RabbitMQ Cluster has been installed and setup using two CentOS 7 nodes, let’s run the following commands to enable RabbitMQ management plugin.</p>
+<blockquote>
+<div>rabbitmq-plugins enable rabbitmq_management
+chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/</div></blockquote>
+<p>Plugin management</p>
+<p>You can do the same by going to the directory where the RabbitMQ is installed.</p>
+<blockquote>
+<div>cd /usr/lib/rabbitmq/lib/rabbitmq_server-3.6.1
+sbin/rabbitmq-plugins enable rabbitmq_management</div></blockquote>
+<p>The rabbitmq_management plugin is a combination of the following plugins. All of the following plugins will be enabled when you execute the above command:</p>
+<p>mochiweb
+webmachine
+rabbitmq_web_dispatch
+amqp_client
+rabbitmq_management_agent
+rabbitmq_management
+After enabling the rabbitmq_management plugin you should restart the RabbitMQ server as shown below.</p>
+<blockquote>
+<div>sbin/rabbitmqctl stop
+sbin/rabbitmq-server -detached</div></blockquote>
+<p>Restart RabbitMQ</p>
+<p>RabbitMQ Web Management:</p>
+<p>Now you access your RabbitMQ server from any of your web browser with mentioned below port.</p>
+<p><a class="reference external" href="http://your_servers_ip:15672/">http://your_servers_ip:15672/</a></p>
+<p>The default user name and passowrd of RabbitMQ Management console sn ‘guest’, ‘guest’ . But you can also create new admin user using below commands.</p>
+<blockquote>
+<div>rabbitmqctl add_user mqadmin mqadmin
+rabbitmqctl set_user_tags mqadmin administrator
+rabbitmqctl set_permissions -p / mqadmin “.*” “.*” “.*”</div></blockquote>
+<p>Login to RabbitMQ</p>
+<p>After providing the right credentials you be directed towards the RabbitMQ Dashboard where you can configure and utilize it awesome features.</p>
+<p>RabbitMQ Dashboard</p>
+<p>Conclusion</p>
+<p>That’s it. We have successfully installed and configured RabbitMQ cluster along with its Web management console. RabbitMQ runs with its standard configuration by default, so you don’t need to be panic about its configurations. Now let’s start using it and explore its multiple features.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Morpheus Data.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'2.12.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

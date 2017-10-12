@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Whitelabel Settings &mdash; morpheus-docs 2.12.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/my_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="morpheus-docs 2.12.2 documentation" href="../../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../provisioning/provisioning.html">Provisioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/infrastructure.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../monitoring/monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logs/logging.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../backups/backups.html">Backups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/operations.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../services/services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../integration_guides/integration_guides.html">Integration Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/faqs.html">FAQ’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ha/ha_setup.html">Morpheus High Availability Configuration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">morpheus-docs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Whitelabel Settings</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/administration/settings/whitelabel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="whitelabel-settings">
+<h1>Whitelabel Settings<a class="headerlink" href="#whitelabel-settings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>{morpheus} Tenants can be WhiteLabeled with custom Logos, Colors, Copy, and custom CSS. Sub-Tenants can be individually white-labeled, or the Master Tenant Whitelabel can apply to all Sub-Tenants.</p>
+<dl class="docutils">
+<dt>Enable Whitelabel</dt>
+<dd>Turns on the configured Whitelabel settings. Disabling will return the Appliance to the default colors and logos, but the configured options will remain saved and will apply if Whitelabel is re-enabled.</dd>
+<dt>Appliance Name</dt>
+<dd>Replaces {morpheus} in page titles.</dd>
+<dt>Header Logo</dt>
+<dd>Top left header logo. Preferred Image Size (500x76)</dd>
+<dt>Footer Logo</dt>
+<dd>Footer Logo in bottom left. Preferred Image Size (264x54)</dd>
+<dt>Login Logo</dt>
+<dd>Logo shown on Login screen. Preferred Image Size (228x280)</dd>
+<dt>Favicon</dt>
+<dd>Must be a .ico file type.</dd>
+<dt>Reset</dt>
+<dd>When selected and Whitelabel settings are saved, associated logo is returned to blank default value.</dd>
+</dl>
+</div>
+<div class="section" id="colors">
+<h2>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h2>
+<p>Update Colors by entering HEX value or selecting the Color Selector pop-up next to each filed and selecting a color.</p>
+<ul class="simple">
+<li>Header Background</li>
+<li>Header Foreground</li>
+<li>Nav Background</li>
+<li>Nav Foreground</li>
+<li>Nav Hover</li>
+<li>Primary Button Bg</li>
+<li>Primary Button Fg</li>
+<li>Primary Button Hover Bg</li>
+<li>Primary Button Hover Fg</li>
+<li>Footer Background</li>
+<li>Footer Foreground</li>
+<li>Login Background</li>
+</ul>
+</div>
+<div class="section" id="override-css">
+<h2>Override CSS<a class="headerlink" href="#override-css" title="Permalink to this headline">¶</a></h2>
+<p>Override CSS settings by entering CSS in <cite>Override CSS</cite> field.</p>
+<p>Example: (this will add one continues background image to the Header)</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>header <span class="c1">#topHeader {</span>
+        background-image: url<span class="o">(</span>http://image_url.png<span class="o">)</span><span class="p">;</span>
+        <span class="o">}</span>
+header <span class="o">{</span>
+        background-image: url<span class="o">(</span>http://image_url.png<span class="o">)</span><span class="p">;</span>
+        <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="copy">
+<h2>Copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h2>
+<p>Add custom Copyright String, Terms of Use, Privacy Policy contained in the Footer text and links in the App and on the login page and emails.</p>
+<p>Available Copy fields</p>
+<ul class="simple">
+<li>Copyright String</li>
+<li>Terms of Use</li>
+<li>Privacy Policy</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Terms of Use and Privacy Policy Footer links will load internal pages at <cite>https://applaince_url/privacy-policy</cite> and <cite>https://applaince_url/terms-of-use</cite> displaying the entered info as plain text.</p>
+</div>
+<p>​
+UI Loading Page
+^^^^^^^^^^^^^^^</p>
+<p>When the {morpheus} UI is restarted or loading, a default “Morpheus is Loading” page is displayed. This page can be changed by adding the following to <cite>/etc/morpheus/morpheus.rb</cite> and adjusting the values.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><cite>morpheus-ctl reconfigure</cite> must be ran for any chnages to <cite>/etc/morpheus/morpheus.rb</cite> to take effect.</p>
+</div>
+<p>nginx[‘web_root_internal’] = “/opt/morpheus/embedded/nginx/html”
+nginx[‘loading_pages’][‘max_loops’] = 6 * 10 # 10 secs per loop x 6 times to get 60 seconds * 10 to get to 10 minutes
+nginx[‘loading_pages’][‘timeout_page’] = ‘/timeout.html’
+nginx[‘loading_pages’][‘iteration_time’] = 10_000
+nginx[‘loading_pages’][‘loading_page_title’] = ‘Morpheus Loading’
+nginx[‘loading_pages’][‘loading_page_h1’] = ‘Morpheus is Loading…’
+nginx[‘loading_pages’][‘loading_page_h2’] = ‘please wait’
+nginx[‘loading_pages’][‘timout_page_title’] = ‘Morpheus timeout, please try again…’
+nginx[‘loading_pages’][‘timout_page_h1’] = ‘Timeout waiting for Morpheus to load, click below to try again.’
+nginx[‘loading_pages’][‘failure_page_title’] = ‘Morpheus Server Error’
+nginx[‘loading_pages’][‘failure_page_h1’] = ‘Morpheus Server Error’
+nginx[‘loading_pages’][‘failure_page_h2’] = ‘Please contact your system administrator for assistance.’</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Morpheus Data.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'2.12.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

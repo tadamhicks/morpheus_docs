@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Appliance Settings &mdash; morpheus-docs 2.12.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/my_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="morpheus-docs 2.12.2 documentation" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../provisioning/provisioning.html">Provisioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../infrastructure/infrastructure.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../administration/administration.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../monitoring/monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../logs/logging.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../backups/backups.html">Backups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/operations.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../services/services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../integration_guides/integration_guides.html">Integration Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq/faqs.html">FAQ’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../release_notes/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ha/ha_setup.html">Morpheus High Availability Configuration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">morpheus-docs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Appliance Settings</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/src/rst/administration/settings/settings.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="appliance-settings">
+<h1>Appliance Settings<a class="headerlink" href="#appliance-settings" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>Administration -&gt; Settings</cite> section sets global configuration parameters for the Appliance, Tenant Registration, Email, Proxy and sets which Cloud types are enabled.</p>
+<div class="section" id="id1">
+<h2>Appliance Settings<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Host Level Firewall Enabled</dt>
+<dd>Enables or Disables the host level firewall. This must be Enabled to use {morpheus} Security Groups.</dd>
+<dt>Appliance URL</dt>
+<dd>The default URL used for Agent install and Agent functionality. All Instances and Hosts must be able to resolve and reach this URL over 443 for successful agent install and communication.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Alternate Appliance URLs can be configured per Cloud in the <cite>Edit Cloud -&gt; Advanced Options</cite> section.</p>
+</div>
+<dl class="docutils">
+<dt>Internal Appliance URL (PXE)</dt>
+<dd>For PXE-Boot your appliance needs to be routable directly with minimal NAT masquerading. This allows one to override the default appliance url endpoint for use by the PXE Server. If this is unset, the default appliance url will be used instead.</dd>
+<dt>API Allowed Origins</dt>
+<dd>Specifies which origins are allowed to access the {morpheus} API.</dd>
+</dl>
+<div class="section" id="tenant-management-settings">
+<h3>Tenant Management Settings<a class="headerlink" href="#tenant-management-settings" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Registration Enabled</dt>
+<dd>If enabled, the appliance login screen will have a “NEED AN ACCOUNT? SIGN UP HERE” link added, enabling new Tenant registration.</dd>
+<dt>Default Tenant Role</dt>
+<dd>Sets the default Tenant Role applied to Tenants created from Tenant Registration.</dd>
+<dt>Default User Role</dt>
+<dd>Sets the default User Role applied to the User created from a Tenant Registration.</dd>
+</dl>
+</div>
+<div class="section" id="email-settings">
+<h3>Email Settings<a class="headerlink" href="#email-settings" title="Permalink to this headline">¶</a></h3>
+<p>{morpheus} has a built in SMTP server for email notifications and alerts. An alternate SMTP server can be specified below:</p>
+<p>Add an alternate SMTP Server:</p>
+<ul class="simple">
+<li>From Address</li>
+<li>SMTP Server</li>
+<li>SMTP Port</li>
+<li>SSL Enabled</li>
+<li>TLS Encryption</li>
+<li>SMTP User</li>
+<li>SMTP Password</li>
+</ul>
+</div>
+<div class="section" id="proxy-settings">
+<h3>Proxy Settings<a class="headerlink" href="#proxy-settings" title="Permalink to this headline">¶</a></h3>
+<p>The {morpheus} Appliance can be configured to communicate through a Proxy server for Cloud API’s and Agent communication back to the Appliance.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Additional Proxy configuration is available in the <cite>Infrastructure -&gt; Network -&gt; Proxies</cite> section. Added Proxies can be scoped to Clouds in the <cite>Edit Cloud -&gt; Advanced Options</cite> section of the Cloud.</p>
+</div>
+<p>Add a Global Proxy server by entering the following:</p>
+<ul class="simple">
+<li>Proxy Host</li>
+<li>Proxy Port</li>
+<li>Proxy User</li>
+<li>Proxy Password</li>
+<li>Proxy Domain</li>
+<li>Proxy Workstation</li>
+</ul>
+</div>
+<div class="section" id="enabled-clouds">
+<h3>Enabled Clouds<a class="headerlink" href="#enabled-clouds" title="Permalink to this headline">¶</a></h3>
+<p>Cloud types can be Enabled or Disabled in this section. When a Cloud type is disabled, it will be removed from the available options when adding new clouds in the <cite>Infrastructure</cite> section.</p>
+<p>Available Cloud types:</p>
+<ul class="simple">
+<li>Morpheus</li>
+<li>OpenStack</li>
+<li>Amazon</li>
+<li>Metacloud</li>
+<li>VMware vCenter</li>
+<li>VMware vCloud Air</li>
+<li>SoftLayer</li>
+<li>Google Cloud</li>
+<li>Azure (Public)</li>
+<li>Azure Stack (Private)</li>
+<li>DigitalOcean</li>
+<li>VirtualBox</li>
+<li>VMware Fusion</li>
+<li>VMWare ESXi</li>
+<li>Nutanix</li>
+<li>UCS</li>
+<li>XenServer</li>
+<li>Hyper-V</li>
+<li>MacStadium</li>
+<li>Oracle VM</li>
+<li>HP</li>
+<li>Supermicro</li>
+<li>Dell</li>
+<li>SCVMM</li>
+<li>UpCloud</li>
+<li>Kubernetes</li>
+<li>Cloud Foundry</li>
+</ul>
+</div>
+</div>
+<div class="section" id="whitelabel-settings">
+<h2>Whitelabel Settings<a class="headerlink" href="#whitelabel-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>{morpheus} Tenants can be WhiteLabeled with custom Logos, Colors, Copy, and custom CSS. Sub-Tenants can be individually white-labeled, or the Master Tenant Whitelabel can apply to all Sub-Tenants.</p>
+<dl class="docutils">
+<dt>Enable Whitelabel</dt>
+<dd>Turns on the configured Whitelabel settings. Disabling will return the Appliance to the default colors and logos, but the configured options will remain saved and will apply if Whitelabel is re-enabled.</dd>
+<dt>Appliance Name</dt>
+<dd>Replaces {morpheus} in page titles.</dd>
+<dt>Header Logo</dt>
+<dd>Top left header logo. Preferred Image Size (500x76)</dd>
+<dt>Footer Logo</dt>
+<dd>Footer Logo in bottom left. Preferred Image Size (264x54)</dd>
+<dt>Login Logo</dt>
+<dd>Logo shown on Login screen. Preferred Image Size (228x280)</dd>
+<dt>Favicon</dt>
+<dd>Must be a .ico file type.</dd>
+<dt>Reset</dt>
+<dd>When selected and Whitelabel settings are saved, associated logo is returned to blank default value.</dd>
+</dl>
+</div>
+<div class="section" id="colors">
+<h3>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h3>
+<p>Update Colors by entering HEX value or selecting the Color Selector pop-up next to each filed and selecting a color.</p>
+<ul class="simple">
+<li>Header Background</li>
+<li>Header Foreground</li>
+<li>Nav Background</li>
+<li>Nav Foreground</li>
+<li>Nav Hover</li>
+<li>Primary Button Bg</li>
+<li>Primary Button Fg</li>
+<li>Primary Button Hover Bg</li>
+<li>Primary Button Hover Fg</li>
+<li>Footer Background</li>
+<li>Footer Foreground</li>
+<li>Login Background</li>
+</ul>
+</div>
+<div class="section" id="override-css">
+<h3>Override CSS<a class="headerlink" href="#override-css" title="Permalink to this headline">¶</a></h3>
+<p>Override CSS settings by entering CSS in <cite>Override CSS</cite> field.</p>
+<p>Example: (this will add one continues background image to the Header)</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>header <span class="c1">#topHeader {</span>
+        background-image: url<span class="o">(</span>http://image_url.png<span class="o">)</span><span class="p">;</span>
+        <span class="o">}</span>
+header <span class="o">{</span>
+        background-image: url<span class="o">(</span>http://image_url.png<span class="o">)</span><span class="p">;</span>
+        <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="copy">
+<h3>Copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h3>
+<p>Add custom Copyright String, Terms of Use, Privacy Policy contained in the Footer text and links in the App and on the login page and emails.</p>
+<p>Available Copy fields</p>
+<ul class="simple">
+<li>Copyright String</li>
+<li>Terms of Use</li>
+<li>Privacy Policy</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Terms of Use and Privacy Policy Footer links will load internal pages at <cite>https://applaince_url/privacy-policy</cite> and <cite>https://applaince_url/terms-of-use</cite> displaying the entered info as plain text.</p>
+</div>
+<p>​
+UI Loading Page
+^^^^^^^^^^^^^^^</p>
+<p>When the {morpheus} UI is restarted or loading, a default “Morpheus is Loading” page is displayed. This page can be changed by adding the following to <cite>/etc/morpheus/morpheus.rb</cite> and adjusting the values.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><cite>morpheus-ctl reconfigure</cite> must be ran for any chnages to <cite>/etc/morpheus/morpheus.rb</cite> to take effect.</p>
+</div>
+<p>nginx[‘web_root_internal’] = “/opt/morpheus/embedded/nginx/html”
+nginx[‘loading_pages’][‘max_loops’] = 6 * 10 # 10 secs per loop x 6 times to get 60 seconds * 10 to get to 10 minutes
+nginx[‘loading_pages’][‘timeout_page’] = ‘/timeout.html’
+nginx[‘loading_pages’][‘iteration_time’] = 10_000
+nginx[‘loading_pages’][‘loading_page_title’] = ‘Morpheus Loading’
+nginx[‘loading_pages’][‘loading_page_h1’] = ‘Morpheus is Loading…’
+nginx[‘loading_pages’][‘loading_page_h2’] = ‘please wait’
+nginx[‘loading_pages’][‘timout_page_title’] = ‘Morpheus timeout, please try again…’
+nginx[‘loading_pages’][‘timout_page_h1’] = ‘Timeout waiting for Morpheus to load, click below to try again.’
+nginx[‘loading_pages’][‘failure_page_title’] = ‘Morpheus Server Error’
+nginx[‘loading_pages’][‘failure_page_h1’] = ‘Morpheus Server Error’
+nginx[‘loading_pages’][‘failure_page_h2’] = ‘Please contact your system administrator for assistance.’</p>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>Overview<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>{morpheus} requires a valid license for provisioning new Instances, Apps and Hosts, and converting existing Instances and Hosts to managed. Licenses can be applied and updated in this section, and the current license status can be checked.</p>
+</div>
+<div class="section" id="current-license">
+<h3>Current License<a class="headerlink" href="#current-license" title="Permalink to this headline">¶</a></h3>
+<p>If a License Key has already been applied, the License status is shown in the <cite>Current License</cite> section:</p>
+<dl class="docutils">
+<dt>Tenant Name</dt>
+<dd>Company name the License was generated for.</dd>
+<dt>Start Date</dt>
+<dd>Date and time the current License started.</dd>
+<dt>End Date</dt>
+<dd>Date and time the current License expires.</dd>
+<dt>Space</dt>
+<dd>Amount of used and unused Managed RAM under the current License.</dd>
+</dl>
+<p>EXAMPLE: On a 1 TB License with 182 GB of RAM under management, the Space section will show <cite>Used Space 182.9GB  Unused Space 841.0GB</cite></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Once a current License expires or has reached its Space limit, users will no longer be able to provision new Instances, Apps, Hosts, or Bare Metal, or convert existing Hosts, Virtual Machines, or Bare Metal to managed. Morpheus will otherwise continue to function.</p>
+</div>
+</div>
+<div class="section" id="upgrade-license-key">
+<h3>Upgrade License Key<a class="headerlink" href="#upgrade-license-key" title="Permalink to this headline">¶</a></h3>
+<p>To add a new or update an existing License:</p>
+<ol class="arabic simple">
+<li>Copy the License Key into the License Key field</li>
+<li>Click <cite>UPDATE</cite></li>
+</ol>
+<p>If valid, the new License will be applied.</p>
+</div>
+<div class="section" id="request-new-license">
+<h3>Request new License<a class="headerlink" href="#request-new-license" title="Permalink to this headline">¶</a></h3>
+<p>Licenses can be requested at <a class="reference external" href="https://morpheushub.com">https://morpheushub.com</a>, or by contacting support&#64; or sales&#64; morpheusdata.com.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Morpheus Data.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'2.12.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,924 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Morpheus High Availability Configuration &mdash; morpheus-docs 2.12.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/my_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="morpheus-docs 2.12.2 documentation" href="../index.html"/>
+        <link rel="prev" title="Release Notes" href="../release_notes/release_notes.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../provisioning/provisioning.html">Provisioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/infrastructure.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/administration.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring/monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logs/logging.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backups/backups.html">Backups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/operations.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../services/services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integration_guides/integration_guides.html">Integration Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/faqs.html">FAQ’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Morpheus High Availability Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#transactional-database-tier">Transactional Database Tier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-transactional-database-tier">Non-Transactional Database Tier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#messaging-tier">Messaging Tier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-tier">Application Tier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#database-tier-configuraiton">Database Tier Configuraiton</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-percona-repo">Add Percona Repo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-percona-xtradb-cluster">Installing Percona XtraDB Cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-mysqld-to-my-cnf-in-etc">Add [mysqld] to my.cnf in /etc/</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bootstrapping-the-first-node-in-the-cluster">Bootstrapping the first Node in the cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bootstrap-the-remaining-nodes">Bootstrap the Remaining Nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verification">Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rabbitmq-cluster">RabbitMQ Cluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rabbitmq-installation-and-configuration">RabbitMQ Installation and Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisits">Prerequisits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-rabbitmq-on-the-3-nodes">Install RabbitMQ on the 3 nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-node-1">On Node 1:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-nodes-2-3">On Nodes 2 &amp; 3:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">On Node 1:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-all-nodes">On All Nodes:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#elasticsearch">Elasticsearch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Application Tier</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">morpheus-docs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Morpheus High Availability Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/ha/ha_setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="morpheus-high-availability-configuration">
+<h1>Morpheus High Availability Configuration<a class="headerlink" href="#morpheus-high-availability-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Morpheus provides a wide array of options when it comes to deployment architectures. It can start as a simple one machine instance where all services run on the same machine, or it can be split off into individual services per machine and configured in a high availability configuration, either in the same region or cross-region. Naturally, high availability can grow more complicated, depending on the configuration you want to do and this article will cover the basic concepts of the Morpheus HA architecture that can be used in a wide array of configurations.</p>
+<p>There are four primary tiers of services represented within the Morpheus appliance. They are the App Tier, Transactional Database Tier, Non-Transactional Database Tier, and Message Tier. Each of these tiers have their own recommendations for High availability deployments that we need to cover.</p>
+<a class="reference internal image-reference" href="../_images/morpheus-ha-multi-configuration.png"><img alt="../_images/morpheus-ha-multi-configuration.png" src="../_images/morpheus-ha-multi-configuration.png" style="width: 1082.7px; height: 904.5px;" /></a>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is a sample configuraiton only. Customer configuraitons and requirements will vary.</p>
+</div>
+<div class="section" id="transactional-database-tier">
+<h3>Transactional Database Tier<a class="headerlink" href="#transactional-database-tier" title="Permalink to this headline">¶</a></h3>
+<p>The Transactional database tier usually consists of a MySQL compatible database. It is recommended that a lockable clustered configuration be used (Currently Percona XtraDB Cluster is the most recommended in Permissive Mode). There are several documents online related to configuring and setting up an XtraDB Cluster but it most simply can be laid out in a many master configuration. There can be some nodes setup with replication delay as well as some with no replication delay. It is common practice to have no replication delay within the same region and allow some replication delay cross region. This does increase the risk of job run overlap between the 2 regions however, the concurrent operations typically self-correct and this is a non-issue.</p>
+</div>
+<div class="section" id="non-transactional-database-tier">
+<h3>Non-Transactional Database Tier<a class="headerlink" href="#non-transactional-database-tier" title="Permalink to this headline">¶</a></h3>
+<p>The Non-Transactional tier consists of an ElasticSearch (version 1.6) cluster. Elastic Search is used for log aggregation data and temporal aggregation data (essentially stats, metrics, and logs). This enables for a high write throughput at scale. ElasticSearch is a Clustered database meaning all nodes no matter the region need to be connected to each other over what they call a “Transport” protocol. It is fairly simple to get setup as all nodes are identical. It is also a java based system and does require a sizeable chunk of memory for larger data sets. (8gb) is recommended and more nodes can be added to scale either horizontally or vertically.</p>
+</div>
+<div class="section" id="messaging-tier">
+<h3>Messaging Tier<a class="headerlink" href="#messaging-tier" title="Permalink to this headline">¶</a></h3>
+<p>The Messaging tier is an AMQP based tier along with STOMP Protocol (used for agent communication). The primary model recommended is to use RabbitMQ for queue services. RabbitMQ is also a clustered based queuing system and needs at least 3 instances for HA configurations. This is due to elections in the failover scenarios rabbitmq can manage. If doing a cross-region HA rabbitmq cluster it is recommended to have at least 3 rabbit queue clusters per region. Typically to handle HA a RabbitMQ cluster should be placed between a load balancer and the front-end application server to handle cross host connections. The ports necessary to forward in a Rabbit MQ cluster are (5672, and 61613). A rabbitmq cluster can run on smaller memory machines depending on how frequent large requests bursts occur. 4–8gb of Memory is recommended to start.</p>
+</div>
+<div class="section" id="application-tier">
+<h3>Application Tier<a class="headerlink" href="#application-tier" title="Permalink to this headline">¶</a></h3>
+<p>The application tier is easily installed with the same debian or yum repository package that Morpheus is normally distributed with. Advanced configuration allows for the additional tiers to be skipped and leave only the “stateless” services that need run. These stateless services include Nginx, Tomcat, and Redis (to be phased out at a later date). These machines should also have at least 8gb of Memory. They can be configured across all regions and placed behind a central load-balancer or Geo based load-balancer. They typically connect to all other tiers as none of the other tiers talk to each other besides through the central application tier. One final piece when it comes to setting up the Application tier is a shared storage means is necessary when it comes to maintaining things like deployment archives, virtual image catalogs, backups, etc. These can be externalized to an object storage service such as amazon S3 or Openstack Swiftstack as well. If not using those options a simple NFS cluster can also be used to handle the shared storage structure.</p>
+</div>
+</div>
+<div class="section" id="database-tier-configuraiton">
+<h2>Database Tier Configuraiton<a class="headerlink" href="#database-tier-configuraiton" title="Permalink to this headline">¶</a></h2>
+<p>Installation and configuraiton of Percona XtraDB Cluster on CentOS/RHEL 7</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is a sample configuraiton only. Customer configuraitons and requirements will vary.</p>
+</div>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>Percona requires the following ports for the cluster nodes. Please create the appropriate firewall rules on your
+Percona nodes.</p>
+<ul class="simple">
+<li>3306</li>
+<li>4444</li>
+<li>4567</li>
+<li>4568</li>
+</ul>
+<p>Percona also recommends setting the selinux policy to permissive. You can temporarily set the permission to permissive by running</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo setenforce <span class="m">0</span>
+</pre></div>
+</div>
+<p>You will need to edit the selinux configuration file if you want the permission to take affect permanently which can be found in <code class="docutils literal"><span class="pre">/etc/selinux/config</span></code></p>
+</div>
+<div class="section" id="add-percona-repo">
+<h3>Add Percona Repo<a class="headerlink" href="#add-percona-repo" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Add the percona repo to your Linux Distro.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+</pre></div>
+</div>
+</li>
+<li><p class="first">Check the repo by running the below command.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum list <span class="p">|</span> grep percona
+</pre></div>
+</div>
+</li>
+<li><p class="first">The below commands will clean the repos and update the server.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum clean all
+sudo yum update -y
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="installing-percona-xtradb-cluster">
+<h3>Installing Percona XtraDB Cluster<a class="headerlink" href="#installing-percona-xtradb-cluster" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">The below command will install the Percona XtraDB Cluster software and it’s dependences.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install Percona-XtraDB-Cluster-57
+
+NOTE:: During the installation you will receive the below message. Accept the Percona PGP key to install the software.
+
+retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Percona
+Importing GPG key 0xCD2EFD2A:
+Userid     : <span class="s2">&quot;Percona MySQL Development Team &lt;mysql-dev@percona.com&gt;&quot;</span>
+Fingerprint: 430b df5c 56e7 c94e 848e e60c 1c4c bdcd cd2e fd2a
+Package    : percona-release-0.1-4.noarch <span class="o">(</span>installed<span class="o">)</span>
+From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-Percona
+Is this ok <span class="o">[</span>y/N<span class="o">]</span>: y
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next we need enable the mysql service so that the service started at boot.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo systemctl <span class="nb">enable</span> mysql
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next we need to start mysql</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo systemctl start mysql
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next we will log into the mysql server and set a new password. To get the temporary root mysql password you will need to run the below command.The command will print the password to the screen. Copy the password.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo grep <span class="s1">&#39;temporary password&#39;</span> /var/log/mysqld.log
+</pre></div>
+</div>
+</li>
+<li><p class="first">Login to mysql</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql -u root -p
+password: <span class="sb">`</span>enter password copied above<span class="sb">`</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Change the root user password to the mysql db</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ALTER USER <span class="s1">&#39;root&#39;</span>@<span class="s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="s1">&#39;MySuperSecurePasswordhere&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create the sstuser user and grant the permissions.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql&gt; CREATE USER <span class="s1">&#39;sstuser&#39;</span>@<span class="s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="s1">&#39;M0rpheus17&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The sstuser and password will be used in the /etc/my.cnf configuration.</p>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql&gt; GRANT RELOAD, LOCK TABLES, PROCESS, REPLICATION CLIENT ON *.* TO <span class="s1">&#39;sstuser&#39;</span>@<span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
+
+mysql&gt; FLUSH PRIVILEGES<span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Exit mysql then stop the mysql services:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql&gt; <span class="nb">exit</span>
+Bye
+$ sudo systemctl stop mysql.service
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now install the Percona software on to the other nodes using the same steps.</p>
+</li>
+</ol>
+<p>Once the service is stopped on all nodes move onto the next step.</p>
+</div>
+<div class="section" id="add-mysqld-to-my-cnf-in-etc">
+<h3>Add [mysqld] to my.cnf in /etc/<a class="headerlink" href="#add-mysqld-to-my-cnf-in-etc" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Copy the below contents to <code class="docutils literal"><span class="pre">/etc/my.cnf</span></code>.  The node_name and node_address needs to be unique on each of the nodes. The first node does not require the gcomm value to be set.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ sudo vi /etc/my.cnf
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>mysqld<span class="o">]</span>
+<span class="nv">wsrep_provider</span><span class="o">=</span>/usr/lib64/galera3/libgalera_smm.so
+
+<span class="nv">wsrep_cluster_name</span><span class="o">=</span>popeye
+<span class="nv">wsrep_cluster_address</span><span class="o">=</span>gcomm://  <span class="c1">#Leave blank for Master Node. The other nodes require this field. Enter the IP address of the primary node first then remaining nodes. Separating the ip addresses with commas like this 10.30.20.196,10.30.20.197,10.30.20.198##</span>
+
+<span class="nv">wsrep_node_name</span><span class="o">=</span>morpheus-node01
+<span class="nv">wsrep_node_address</span><span class="o">=</span><span class="m">10</span>.30.20.57
+
+<span class="nv">wsrep_sst_method</span><span class="o">=</span>xtrabackup-v2
+<span class="nv">wsrep_sst_auth</span><span class="o">=</span>sstuser:M0rpheus17
+<span class="nv">pxc_strict_mode</span><span class="o">=</span>PERMISSIVE
+
+<span class="nv">binlog_format</span><span class="o">=</span>ROW
+<span class="nv">default_storage_engine</span><span class="o">=</span>InnoDB
+<span class="nv">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="m">2</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Save <code class="docutils literal"><span class="pre">/etc/my.cnf</span></code></p>
+</li>
+</ol>
+</div>
+<div class="section" id="bootstrapping-the-first-node-in-the-cluster">
+<h3>Bootstrapping the first Node in the cluster<a class="headerlink" href="#bootstrapping-the-first-node-in-the-cluster" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Ensure mysql.service is stopped prior to bootstrap.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">To bootstrap the first node in the cluster run the below command.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>systemctl start mysql@bootstrap.service
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The mysql service will start during the boot strap.</p>
+</div>
+</li>
+<li><p class="first">To verify the bootstrap, on the master node login to mysql and run <code class="docutils literal"><span class="pre">show</span> <span class="pre">status</span> <span class="pre">like</span> <span class="pre">'wsrep%';</span></code></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># mysql -u root -p</span>
+
+   mysql&gt;  show status like <span class="s1">&#39;wsrep%&#39;</span><span class="p">;</span>
+   +----------------------------------+--------------------------------------+
+   <span class="p">|</span> Variable_name                    <span class="p">|</span> Value                                <span class="p">|</span>
+   +----------------------------------+--------------------------------------+
+   <span class="p">|</span> wsrep_local_state_uuid           <span class="p">|</span> 591179cb-a98e-11e7-b9aa-07df8a228fe9 <span class="p">|</span>
+   <span class="p">|</span> wsrep_protocol_version           <span class="p">|</span> <span class="m">7</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_last_committed             <span class="p">|</span> <span class="m">1</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_replicated                 <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_replicated_bytes           <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_repl_keys                  <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_repl_keys_bytes            <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_repl_data_bytes            <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_repl_other_bytes           <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_received                   <span class="p">|</span> <span class="m">2</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_received_bytes             <span class="p">|</span> <span class="m">141</span>                                  <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_commits              <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_cert_failures        <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_replays              <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_send_queue           <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_send_queue_max       <span class="p">|</span> <span class="m">1</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_send_queue_min       <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_send_queue_avg       <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_recv_queue           <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_recv_queue_max       <span class="p">|</span> <span class="m">2</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_recv_queue_min       <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_recv_queue_avg       <span class="p">|</span> <span class="m">0</span>.500000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_cached_downto        <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_paused_ns     <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_paused        <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_sent          <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_recv          <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_interval      <span class="p">|</span> <span class="o">[</span> <span class="m">100</span>, <span class="m">100</span> <span class="o">]</span>                         <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_interval_low  <span class="p">|</span> <span class="m">100</span>                                  <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_interval_high <span class="p">|</span> <span class="m">100</span>                                  <span class="p">|</span>
+   <span class="p">|</span> wsrep_flow_control_status        <span class="p">|</span> OFF                                  <span class="p">|</span>
+   <span class="p">|</span> wsrep_cert_deps_distance         <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_apply_oooe                 <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_apply_oool                 <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_apply_window               <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_commit_oooe                <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_commit_oool                <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_commit_window              <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_state                <span class="p">|</span> <span class="m">4</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_state_comment        <span class="p">|</span> Synced                               <span class="p">|</span>
+   <span class="p">|</span> wsrep_cert_index_size            <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_cert_bucket_count          <span class="p">|</span> <span class="m">22</span>                                   <span class="p">|</span>
+   <span class="p">|</span> wsrep_gcache_pool_size           <span class="p">|</span> <span class="m">1320</span>                                 <span class="p">|</span>
+   <span class="p">|</span> wsrep_causal_reads               <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_cert_interval              <span class="p">|</span> <span class="m">0</span>.000000                             <span class="p">|</span>
+   <span class="p">|</span> wsrep_ist_receive_status         <span class="p">|</span>                                      <span class="p">|</span>
+   <span class="p">|</span> wsrep_ist_receive_seqno_start    <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_ist_receive_seqno_current  <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_ist_receive_seqno_end      <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_incoming_addresses         <span class="p">|</span> <span class="m">10</span>.30.20.196:3306                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_desync_count               <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_evs_delayed                <span class="p">|</span>                                      <span class="p">|</span>
+   <span class="p">|</span> wsrep_evs_evict_list             <span class="p">|</span>                                      <span class="p">|</span>
+   <span class="p">|</span> wsrep_evs_repl_latency           <span class="p">|</span> <span class="m">0</span>/0/0/0/0                            <span class="p">|</span>
+   <span class="p">|</span> wsrep_evs_state                  <span class="p">|</span> OPERATIONAL                          <span class="p">|</span>
+   <span class="p">|</span> wsrep_gcomm_uuid                 <span class="p">|</span> 07c8c8fe-a998-11e7-883e-06949cfe5af3 <span class="p">|</span>
+   <span class="p">|</span> wsrep_cluster_conf_id            <span class="p">|</span> <span class="m">1</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_cluster_size               <span class="p">|</span> <span class="m">1</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_cluster_state_uuid         <span class="p">|</span> 591179cb-a98e-11e7-b9aa-07df8a228fe9 <span class="p">|</span>
+   <span class="p">|</span> wsrep_cluster_status             <span class="p">|</span> Primary                              <span class="p">|</span>
+   <span class="p">|</span> wsrep_connected                  <span class="p">|</span> ON                                   <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_bf_aborts            <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_local_index                <span class="p">|</span> <span class="m">0</span>                                    <span class="p">|</span>
+   <span class="p">|</span> wsrep_provider_name              <span class="p">|</span> Galera                               <span class="p">|</span>
+   <span class="p">|</span> wsrep_provider_vendor            <span class="p">|</span> Codership Oy &lt;info@codership.com&gt;    <span class="p">|</span>
+   <span class="p">|</span> wsrep_provider_version           <span class="p">|</span> <span class="m">3</span>.22<span class="o">(</span>r8678538<span class="o">)</span>                       <span class="p">|</span>
+   <span class="p">|</span> wsrep_ready                      <span class="p">|</span> ON                                   <span class="p">|</span>
+   +----------------------------------+--------------------------------------+
+    <span class="m">67</span> rows in <span class="nb">set</span> <span class="o">(</span><span class="m">0</span>.01 sec<span class="o">)</span>
+</pre></div>
+</div>
+<p>A table will appear with the status and rows.</p>
+</li>
+<li><p class="first">Next Create the Database you will be using with morpheus.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql&gt; CREATE DATABASE morpheusdb<span class="p">;</span>
+
+mysql&gt; show databases<span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next create your morpheus database user. The user needs to be either at the IP address of the morpheus application server or use &#64;’%’ within the user name to allow the user to login from anywhere.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql&gt; CREATE USER <span class="s1">&#39;morpheusadmin&#39;</span>@<span class="s1">&#39;%&#39;</span> IDENTIFIED BY <span class="s1">&#39;Cloudy2017&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next Grant your new morpheus user permissions to the database.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql&gt; GRANT ALL PRIVILEGES ON * . * TO &#39;morpheusadmin&#39;@&#39;&#39;%&#39; IDENTIFIED BY &#39;Cloudy2017&#39; with grant option;
+
+
+mysql&gt; FLUSH PRIVILEGES;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Checking Permissions for your user.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>SHOW GRANTS FOR <span class="s1">&#39;morpheusadmin&#39;</span>@<span class="s1">&#39;&#39;</span>%<span class="s1">&#39;&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="bootstrap-the-remaining-nodes">
+<h3>Bootstrap the Remaining Nodes<a class="headerlink" href="#bootstrap-the-remaining-nodes" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">To bootstrap the remaining nodes into the cluster run the following command on each node:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo systemctl start mysql.service
+</pre></div>
+</div>
+<p>The services will automatically connect to the cluster using the sstuser we created earlier.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Bootstrap failures are commonly caused by misconfigured /etc/my.cnf files.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="verification">
+<h3>Verification<a class="headerlink" href="#verification" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">To verify the cluster, on the master login to mysql and run <code class="docutils literal"><span class="pre">show</span> <span class="pre">status</span> <span class="pre">like</span> <span class="pre">'wsrep%';</span></code></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mysql -u root -p
+
+ mysql&gt;  show status like <span class="s1">&#39;wsrep%&#39;</span><span class="p">;</span>
+
++----------------------------------+-------------------------------------------------------+
+ <span class="p">|</span> Variable_name                    <span class="p">|</span> Value                                                 <span class="p">|</span>
+ +----------------------------------+-------------------------------------------------------+
+ <span class="p">|</span> wsrep_local_state_uuid           <span class="p">|</span> 591179cb-a98e-11e7-b9aa-07df8a228fe9                  <span class="p">|</span>
+ <span class="p">|</span> wsrep_protocol_version           <span class="p">|</span> <span class="m">7</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_last_committed             <span class="p">|</span> <span class="m">4</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_replicated                 <span class="p">|</span> <span class="m">3</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_replicated_bytes           <span class="p">|</span> <span class="m">711</span>                                                   <span class="p">|</span>
+ <span class="p">|</span> wsrep_repl_keys                  <span class="p">|</span> <span class="m">3</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_repl_keys_bytes            <span class="p">|</span> <span class="m">93</span>                                                    <span class="p">|</span>
+ <span class="p">|</span> wsrep_repl_data_bytes            <span class="p">|</span> <span class="m">426</span>                                                   <span class="p">|</span>
+ <span class="p">|</span> wsrep_repl_other_bytes           <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_received                   <span class="p">|</span> <span class="m">10</span>                                                    <span class="p">|</span>
+ <span class="p">|</span> wsrep_received_bytes             <span class="p">|</span> <span class="m">774</span>                                                   <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_commits              <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_cert_failures        <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_replays              <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_send_queue           <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_send_queue_max       <span class="p">|</span> <span class="m">1</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_send_queue_min       <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_send_queue_avg       <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_recv_queue           <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_recv_queue_max       <span class="p">|</span> <span class="m">2</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_recv_queue_min       <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_recv_queue_avg       <span class="p">|</span> <span class="m">0</span>.100000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_cached_downto        <span class="p">|</span> <span class="m">2</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_paused_ns     <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_paused        <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_sent          <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_recv          <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_interval      <span class="p">|</span> <span class="o">[</span> <span class="m">173</span>, <span class="m">173</span> <span class="o">]</span>                                          <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_interval_low  <span class="p">|</span> <span class="m">173</span>                                                   <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_interval_high <span class="p">|</span> <span class="m">173</span>                                                   <span class="p">|</span>
+ <span class="p">|</span> wsrep_flow_control_status        <span class="p">|</span> OFF                                                   <span class="p">|</span>
+ <span class="p">|</span> wsrep_cert_deps_distance         <span class="p">|</span> <span class="m">1</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_apply_oooe                 <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_apply_oool                 <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_apply_window               <span class="p">|</span> <span class="m">1</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_commit_oooe                <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_commit_oool                <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_commit_window              <span class="p">|</span> <span class="m">1</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_state                <span class="p">|</span> <span class="m">4</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_state_comment        <span class="p">|</span> Synced                                                <span class="p">|</span>
+ <span class="p">|</span> wsrep_cert_index_size            <span class="p">|</span> <span class="m">1</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_cert_bucket_count          <span class="p">|</span> <span class="m">22</span>                                                    <span class="p">|</span>
+ <span class="p">|</span> wsrep_gcache_pool_size           <span class="p">|</span> <span class="m">2413</span>                                                  <span class="p">|</span>
+ <span class="p">|</span> wsrep_causal_reads               <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_cert_interval              <span class="p">|</span> <span class="m">0</span>.000000                                              <span class="p">|</span>
+ <span class="p">|</span> wsrep_ist_receive_status         <span class="p">|</span>                                                       <span class="p">|</span>
+ <span class="p">|</span> wsrep_ist_receive_seqno_start    <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_ist_receive_seqno_current  <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_ist_receive_seqno_end      <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_incoming_addresses         <span class="p">|</span> <span class="m">10</span>.30.20.196:3306,10.30.20.197:3306,10.30.20.198:3306 <span class="p">|</span>
+ <span class="p">|</span> wsrep_desync_count               <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_evs_delayed                <span class="p">|</span>                                                       <span class="p">|</span>
+ <span class="p">|</span> wsrep_evs_evict_list             <span class="p">|</span>                                                       <span class="p">|</span>
+ <span class="p">|</span> wsrep_evs_repl_latency           <span class="p">|</span> <span class="m">0</span>/0/0/0/0                                             <span class="p">|</span>
+ <span class="p">|</span> wsrep_evs_state                  <span class="p">|</span> OPERATIONAL                                           <span class="p">|</span>
+ <span class="p">|</span> wsrep_gcomm_uuid                 <span class="p">|</span> 07c8c8fe-a998-11e7-883e-06949cfe5af3                  <span class="p">|</span>
+ <span class="p">|</span> wsrep_cluster_conf_id            <span class="p">|</span> <span class="m">3</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_cluster_size               <span class="p">|</span> <span class="m">3</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_cluster_state_uuid         <span class="p">|</span> 591179cb-a98e-11e7-b9aa-07df8a228fe9                  <span class="p">|</span>
+ <span class="p">|</span> wsrep_cluster_status             <span class="p">|</span> Primary                                               <span class="p">|</span>
+ <span class="p">|</span> wsrep_connected                  <span class="p">|</span> ON                                                    <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_bf_aborts            <span class="p">|</span> <span class="m">0</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_local_index                <span class="p">|</span> <span class="m">1</span>                                                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_provider_name              <span class="p">|</span> Galera                                                <span class="p">|</span>
+ <span class="p">|</span> wsrep_provider_vendor            <span class="p">|</span> Codership Oy &lt;info@codership.com&gt;                     <span class="p">|</span>
+ <span class="p">|</span> wsrep_provider_version           <span class="p">|</span> <span class="m">3</span>.22<span class="o">(</span>r8678538<span class="o">)</span>                                        <span class="p">|</span>
+ <span class="p">|</span> wsrep_ready                      <span class="p">|</span> ON                                                    <span class="p">|</span>
+ +----------------------------------+-------------------------------------------------------+
+</pre></div>
+</div>
+</li>
+<li><p class="first">Verify that you can login to the MSQL server by running the below command on the Morpheus Application server(s).</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql -u morpheusadmin -p  -h <span class="m">192</span>.168.10.100
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This command requires mysql client installed. If you are on a windows machine you can connect to the server using mysql work bench which can be found here <a class="reference external" href="https://www.mysql.com/products/workbench/">https://www.mysql.com/products/workbench/</a></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="rabbitmq-cluster">
+<h2>RabbitMQ Cluster<a class="headerlink" href="#rabbitmq-cluster" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rabbitmq-installation-and-configuration">
+<h3>RabbitMQ Installation and Configuration<a class="headerlink" href="#rabbitmq-installation-and-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is a sample configuraiton only. Customer configuraitons and requirements will vary.</p>
+</div>
+<div class="section" id="prerequisits">
+<h4>Prerequisits<a class="headerlink" href="#prerequisits" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>yum install epel-release
+yum install erlang
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-rabbitmq-on-the-3-nodes">
+<h4>Install RabbitMQ on the 3 nodes<a class="headerlink" href="#install-rabbitmq-on-the-3-nodes" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>wget https://dl.bintray.com/rabbitmq/rabbitmq-server-rpm/rabbitmq-server-3.6.12-1.el7.noarch.rpm
+
+ rpm --import https://www.rabbitmq.com/rabbitmq-release-signing-key.asc
+
+ yum -y install rabbitmq-server-3.6.12-1.el7.noarch.rpm
+
+ chkconfig rabbitmq-server on
+
+ rabbitmq-server -detached
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-node-1">
+<h4>On Node 1:<a class="headerlink" href="#on-node-1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>cat /var/lib/rabbitmq/.erlang.cookie
+</pre></div>
+</div>
+<p>Copy this value</p>
+</div>
+<div class="section" id="on-nodes-2-3">
+<h4>On Nodes 2 &amp; 3:<a class="headerlink" href="#on-nodes-2-3" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p class="first">Overwrite /var/lib/rabbitmq/.erlang.cookie with value from previous step and change its permissions using the follow commands.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>chown rabbitmq:rabbitmq /var/lib/rabbitmq/*
+ chmod <span class="m">400</span> /var/lib/rabbitmq/.erlang.cookie
+</pre></div>
+</div>
+</li>
+<li><p class="first">edit /etc/hosts file to refer to shortname of node 1</p>
+<p>example:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="m">10</span>.30.20.100 rabbit-1
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the commands to join each node to the cluster</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>rabbitmqctl stop
+rabbitmq-server -detached
+rabbitmqctl stop_app
+rabbitmqctl join_cluster rabbit@<span class="s">&lt;&lt;node 1 shortn</span>ame&gt;&gt;
+rabbitmqctl start_app
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="id1">
+<h4>On Node 1:<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>rabbitmqctl add_user <span class="s">&lt;&lt;admin username&gt;&gt; &lt;&lt;password&gt;&gt;</span>
+<span class="s">rabbitmqctl set_permissions -p / &lt;&lt;admin</span> username&gt;&gt; <span class="s2">&quot;.*&quot;</span> <span class="s2">&quot;.*&quot;</span> <span class="s2">&quot;.*&quot;</span>
+rabbitmqctl set_user_tags <span class="s">&lt;&lt;admin username&gt;&gt; admin</span>istrator
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-all-nodes">
+<h4>On All Nodes:<a class="headerlink" href="#on-all-nodes" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>rabbitmq-plugins <span class="nb">enable</span> rabbitmq_stomp
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="elasticsearch">
+<h2>Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permalink to this headline">¶</a></h2>
+<p>Install 3 node Elasticsearch Cluster on Centos 7</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is a sample configuraiton only. Customer configuraitons and requirements will vary.</p>
+</div>
+<div class="section" id="id2">
+<h3>Requirements<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Three Existing Cenots 7+ nodes accessible to the Morpheus Appliance</p>
+</li>
+<li><p class="first">Install Java on each node</p>
+<p>You can install the latest OpenJDK with the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo yum install java-1.8.0-openjdk.x86_64
+</pre></div>
+</div>
+<p>To verify your JRE is installed and can be used, run the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>java -version
+</pre></div>
+</div>
+<p>The result should look like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>Output of java -version
+openjdk version <span class="s2">&quot;1.8.0_65&quot;</span>
+OpenJDK Runtime Environment <span class="o">(</span>build <span class="m">1</span>.8.0_65-b17<span class="o">)</span>
+OpenJDK <span class="m">64</span>-Bit Server VM <span class="o">(</span>build <span class="m">25</span>.65-b01, mixed mode<span class="o">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Download and Install Elasticsearch</p>
+<p>Elasticsearch can be downloaded directly from elastic.co in zip, tar.gz, deb, or rpm packages. For CentOS, it’s best to use the native rpm package which will install everything you need to run Elasticsearch. Download it in a directory of your choosing with the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.noarch.rpm
+</pre></div>
+</div>
+<p>Then install it in the usual CentOS way with the rpm command like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo rpm -ivh elasticsearch-1.7.3.noarch.rpm
+</pre></div>
+</div>
+<p>This results in Elasticsearch being installed in /usr/share/elasticsearch/ with its configuration files placed in /etc/elasticsearch and its init script added in /etc/init.d/elasticsearch.</p>
+<p>To make sure Elasticsearch starts and stops automatically, add its init script to the default runlevels with the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo systemctl <span class="nb">enable</span> elasticsearch.service
+</pre></div>
+</div>
+</li>
+<li><p class="first">Configuring Elastic</p>
+<p>Now that Elasticsearch and its Java dependencies have been installed, it is time to configure Elasticsearch.</p>
+<p>The Elasticsearch configuration files are in the /etc/elasticsearch directory. There are two files:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo vi /etc/elasticsearch/elasticsearch.yml
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>elasticsearch.yml</dt>
+<dd><p class="first last">Configures the Elasticsearch server settings. This is where all options, except those for logging, are stored, which is why we are mostly interested in this file.</p>
+</dd>
+<dt>logging.yml</dt>
+<dd><p class="first last">Provides configuration for logging. In the beginning, you don’t have to edit this file. You can leave all default logging options. You can find the resulting logs in /var/log/elasticsearch by default.</p>
+</dd>
+</dl>
+<p>The first variables to customize on any Elasticsearch server are node.name and cluster.name in elasticsearch.yml. As their names suggest, node.name specifies the name of the server (node) and the cluster to which the latter is associated.</p>
+<p>Node 1</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>cluster.name: morpheusha1
+node.name: <span class="s2">&quot;morpheuses1&quot;</span>
+discovery.zen.ping.unicast.hosts: <span class="o">[</span><span class="s2">&quot;10.30.20.91&quot;</span>,<span class="s2">&quot;10.30.20.149&quot;</span>,<span class="s2">&quot;10.30.20.165&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Node 2</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>cluster.name: morpheusha1
+node.name: <span class="s2">&quot;morpheuses2&quot;</span>
+discovery.zen.ping.unicast.hosts: <span class="o">[</span><span class="s2">&quot;10.30.20.91&quot;</span>,<span class="s2">&quot;10.30.20.149&quot;</span>,<span class="s2">&quot;10.30.20.165&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Node 3</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>cluster.name: morpheusha1
+node.name: <span class="s2">&quot;morpheuses3&quot;</span>
+discovery.zen.ping.unicast.hosts: <span class="o">[</span><span class="s2">&quot;10.30.20.91&quot;</span>,<span class="s2">&quot;10.30.20.149&quot;</span>,<span class="s2">&quot;10.30.20.165&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>For the above changes to take effect, you will have to restart Elasticsearch with the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo service elasticsearch restart
+</pre></div>
+</div>
+</li>
+<li><p class="first">Testing</p>
+<p>By now, Elasticsearch should be running on port 9200. You can test it with curl, the command line client-side URL transfers tool and a simple GET request like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>~<span class="o">]</span>$ sudo curl -X GET <span class="s1">&#39;http://10.30.20.149:9200&#39;</span>
+      <span class="o">{</span>
+        <span class="s2">&quot;status&quot;</span> : <span class="m">200</span>,
+        <span class="s2">&quot;name&quot;</span> : <span class="s2">&quot;morpheuses1&quot;</span>,
+        <span class="s2">&quot;cluster_name&quot;</span> : <span class="s2">&quot;morpheusha1&quot;</span>,
+        <span class="s2">&quot;version&quot;</span> : <span class="o">{</span>
+          <span class="s2">&quot;number&quot;</span> : <span class="s2">&quot;1.7.3&quot;</span>,
+          <span class="s2">&quot;build_hash&quot;</span> : <span class="s2">&quot;05d4530971ef0ea46d0f4fa6ee64dbc8df659682&quot;</span>,
+          <span class="s2">&quot;build_timestamp&quot;</span> : <span class="s2">&quot;2015-10-15T09:14:17Z&quot;</span>,
+          <span class="s2">&quot;build_snapshot&quot;</span> : false,
+          <span class="s2">&quot;lucene_version&quot;</span> : <span class="s2">&quot;4.10.4&quot;</span>
+        <span class="o">}</span>,
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>Application Tier<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>{morpheus} configuration is controlled by a configuration file located
+at /etc/morpheus/morpheus.rb. This file is read when you run
+morpheus-ctl reconfigure after installing the appliance package. Each
+section is tied to a deployment tier: database is mysql, message queue
+is rabbitmq, serach index is elasticsearch. There are no entries for the
+web and application tiers since those are part of the core application
+server where the configuration file resides.</p>
+<ol class="arabic simple">
+<li>Download and install the Morpheus Applaince Package</li>
+<li>Next we must install the package onto the machine and configure the morpheus services:</li>
+</ol>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo sudo rpm -i morpheus-appliance-x.x.x-1.x86<span class="se">\_</span><span class="m">64</span>.rpm
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">After installing and prior to reconfiguring, edit the morpheus.rb file</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo vi /etc/morpheus/morpheus.rb
+</pre></div>
+</div>
+<p>Change the values to match your configured services:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The values below are examples. Update hsots, ports, usernames and password with your specificaitons. Only include entries for services you wish to externalize.</p>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mysql<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+mysql<span class="o">[</span><span class="s1">&#39;host&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;10.30.20.139&#39;</span> <span class="o">=</span>&gt; <span class="m">3306</span>,  <span class="s1">&#39;10.30.20.153&#39;</span> <span class="o">=</span>&gt; <span class="m">3306</span>,  <span class="s1">&#39;10.30.20.196&#39;</span> <span class="o">=</span>&gt; <span class="m">3306</span><span class="o">}</span>
+mysql<span class="o">[</span><span class="s1">&#39;morpheus_db&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morpheusdb&#39;</span>
+mysql<span class="o">[</span><span class="s1">&#39;morpheus_db_user&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morpheusadmin&#39;</span>
+mysql<span class="o">[</span><span class="s1">&#39;morpheus_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morpheus4admin!&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;vhost&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morph&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;queue_user&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;lbuser&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;queue_user_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morpheus4admin&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;host&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morpheus-ha-mq-lb-1.den.morpheusdata.com&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;5672&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;stomp_port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;61613&#39;</span>
+rabbitmq<span class="o">[</span><span class="s1">&#39;heartbeat&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">50</span>
+elasticsearch<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+elasticsearch<span class="o">[</span><span class="s1">&#39;cluster&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;morpheusha1&#39;</span>
+elasticsearch<span class="o">[</span><span class="s1">&#39;es_hosts&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="o">{</span><span class="s1">&#39;10.30.20.91&#39;</span> <span class="o">=</span>&gt; <span class="m">9300</span>, <span class="s1">&#39;10.30.20.149&#39;</span> <span class="o">=</span>&gt; <span class="m">9300</span>, <span class="s1">&#39;10.30.20.165&#39;</span> <span class="o">=</span>&gt; <span class="m">9300</span><span class="o">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Recofigure Morpheus</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo morpheus-ctl reconfigure
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../release_notes/release_notes.html" class="btn btn-neutral" title="Release Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Morpheus Data.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.12.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>OneLogin &mdash; morpheus-docs 2.12.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../../_static/my_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="morpheus-docs 2.12.2 documentation" href="../../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../provisioning/provisioning.html">Provisioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../infrastructure/infrastructure.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../administration/administration.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../monitoring/monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../logs/logging.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../backups/backups.html">Backups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/operations.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../services/services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../integration_guides/integration_guides.html">Integration Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq/faqs.html">FAQ’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../release_notes/release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ha/ha_setup.html">Morpheus High Availability Configuration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">morpheus-docs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>OneLogin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/src/rst/administration/tenants/onelogin.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="onelogin">
+<h1>OneLogin<a class="headerlink" href="#onelogin" title="Permalink to this headline">¶</a></h1>
+<p>Administration -&gt; Tenants -&gt; Select Tenant -&gt; Identity Sources</p>
+<p>Adding OneLogin Identity Source Integraiton</p>
+<ol class="arabic">
+<li><p class="first">Navigate to Administration -&gt; Tenants</p>
+</li>
+<li><p class="first">Select the Tenant to add the Identity Source Integraiton</p>
+</li>
+<li><p class="first">Select the IDENTITY SOURCES button</p>
+</li>
+<li><p class="first">Seelct + ADD IDENTITY SOURCE</p>
+</li>
+<li><p class="first">Enter the following:</p>
+<dl class="docutils">
+<dt>TYPE</dt>
+<dd><p class="first last">OneLogin</p>
+</dd>
+<dt>NAME</dt>
+<dd><blockquote class="first">
+<div><p>Name of the Identity Source Integraiton in Morpheus</p>
+</div></blockquote>
+<dl class="last docutils">
+<dt>DESCRIPTION</dt>
+<dd><p class="first last">Optional Description of the Identiry Source</p>
+</dd>
+<dt>ONELOGIN SUBDOMAIN</dt>
+<dd><dl class="first last docutils">
+<dt>example: morpheus-dev</dt>
+<dd><div class="first last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Please verify the subdomain carefully. An invalid subdomain will cause authentication attempts by OneLogin users to fail.</p>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>ONELOGIN REGION</dt>
+<dd><p class="first last">Speciify US or EU region</p>
+</dd>
+<dt>API CLIENT SECRET</dt>
+<dd><p class="first last">OneLogin API Client Secret from the Settings - API section in OneLogin portal</p>
+</dd>
+<dt>API CLIENT ID</dt>
+<dd><p class="first last">OneLogin API Client ID from the Settings - API section in OneLogin portal</p>
+</dd>
+<dt>REQUIRED ROLE</dt>
+<dd><p class="first last">Enter a role if OneLogin users logging into morpheus must have at least this OneLogin role to gain access to Morpheus.</p>
+</dd>
+<dt>DEFAULT ROLE</dt>
+<dd><p class="first last">The default Morpheus Role applied to users created from OneLogin Integraiton if no other role mapping is specified below</p>
+</dd>
+<dt>ROLE MAPPINGS</dt>
+<dd><p class="first last">Existing Morpheus Roles will be listed with fileds to enter OneLogin Roles to map to. Users with OneLogin roles matching the role mappings will be assigned the approprie Role(s) in Morpheus when sigining in.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><p class="first">Select SAVE CHANGES and the OneLogin Integraitnn will be added.</p>
+</li>
+</ol>
+<p>Users can now login to Morpheus with OneLogin credentials. The first Login will create a user in Morpheus matching the Username, email and Password from OneLogin. If a REQUIRED ROLE is specified in the Identiry Source settings, only users with that Role in OneLogin will be able to login to Morpheus.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">OneLogin users will not authenticate in Morpheus if there is an existing Morpheus User with matching username or email address.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Morpheus Data.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'2.12.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

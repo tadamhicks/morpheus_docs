@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>v2.12.2 &mdash; morpheus-docs 2.12.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/my_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="morpheus-docs 2.12.2 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../provisioning/provisioning.html">Provisioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/infrastructure.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/administration.html">Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../monitoring/monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logs/logging.html">Logs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backups/backups.html">Backups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/operations.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../services/services.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integration_guides/integration_guides.html">Integration Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/faqs.html">FAQ’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ha/ha_setup.html">Morpheus High Availability Configuration</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">morpheus-docs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>v2.12.2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/release_notes/2_12_2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="v2-12-2">
+<h1>v2.12.2<a class="headerlink" href="#v2-12-2" title="Permalink to this headline">¶</a></h1>
+<p><em>v2.12.2 release date 10/9/2017</em></p>
+<p><strong>Morpheus v2.12.2 adds the ServiceNow CMDB Integration, improvements to existing Features and Integrations, and bug fixes and enhancements.</strong></p>
+<ul class="simple">
+<li>ServiceNow CMDB Integration: The Morpheus ServiceNow CMDB integration creates a CMDB record upon Instance provision, updates the CMDB state when an instance is removed, and syncs changed Instance states nightly.</li>
+<li>Additional ServiceNow Plugin Improvements</li>
+<li>“Disable Management of Firewall by Agent” option added to Cloud settings.</li>
+<li>Editing existing Environment Variables support added for Windows</li>
+<li>VMware Folder support added to apps and templates</li>
+<li>Nutanix Unmanaged Network Static IP support added</li>
+<li>Script Variables added for Volumes: id: <code class="docutils literal"><span class="pre">vol.id,</span> <span class="pre">name:</span> <span class="pre">vol.name,</span> <span class="pre">deviceName:</span> <span class="pre">vol.deviceName,</span> <span class="pre">maxStorage:</span> <span class="pre">vol.maxStorage,</span> <span class="pre">unitNumber:</span> <span class="pre">vol.unitNumber,displayOrder:</span> <span class="pre">vol.displayOrder,</span> <span class="pre">rootVolume:</span> <span class="pre">vol.rootVolume</span></code></li>
+<li>vmxnet3 set as default VMware Network Adapter type.</li>
+<li>Chef bootstrap process output added to Instance History</li>
+<li>Improved Tenant Deletion</li>
+<li>Improved VMware Folder and Resource Pool sync</li>
+<li>Mobile layout improvements</li>
+<li>Local Chef install url for windows msi added.</li>
+<li>Email layout improvements for broader email client support.</li>
+<li>Chef Integration now determines when FQDN should not be added.</li>
+<li>Improved Provisioning error outputs</li>
+<li>Improvements to User scoped permissions for monitoring, logs and backups.</li>
+</ul>
+<p>Fixes:</p>
+<ul class="simple">
+<li>Fix for Bulk Network Edit</li>
+<li>Fix for DHCP flag being reset on Nutanix networks upon cloud sync.</li>
+<li>Fix for Agent timestamp handling</li>
+<li>Fix for Dashboard 500 error when user Role Permissions = Monitoring : User</li>
+<li>Fix for Netscaler SSL cert upload</li>
+<li>Fix for server stop/start when inventoried server is converted to managed and Instance Type is applied.</li>
+<li>Additional character handling in Automation Scripts</li>
+<li>Fix for Remove Shutdown Instance Action hanging</li>
+<li>Fix for Instance History purge</li>
+<li>Various other bug fixes and improvements</li>
+</ul>
+<p>Morpheus v2.12.2 is available in the Downloads section of <a href="#id1"><span class="problematic" id="id2">`morpheushub.com&lt;https://morpheushub.com/&gt;`_</span></a>.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Morpheus Data.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.12.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
