@@ -154,6 +154,8 @@ Using Secrets
 
 Another great feature with using Ansible and |morpheus| together is the built in support for utilizing some of the services that |morpheus| exposes for automation. One of these great services is known as Cypher (please see documentation on :ref:`Cypher` for more details). Cypher allows one to store secret data in a highly encrypted way for future retrieval. Referencing keys stored in cypher in your playbooks is a matter of using a built-in lookup plugin for ansible.
 
+.. NOTE:: The lookup plugin depends on the ``requests`` module being installed for the system Python.  
+
 .. code-block:: bash
 
     - name: Add a user
