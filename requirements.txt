@@ -2,3 +2,5 @@ sphinx_markdown_tables
 sphinxcontrib-contentui
 sphinxcontrib-images
 https://github.com/djungelorm/sphinx-tabs/releases/download/v1.1.11/sphinx-tabs-1.1.11.tar.gz
+pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
+sphinx>=3.0.4 # not directly required, pinned by Snyk to avoid a vulnerability
